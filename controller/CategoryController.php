@@ -57,7 +57,7 @@
             } catch (\Throwable $th) {
                 return array(
                     'message' => 'Error al registrar la categoria',
-                    'data' => array(),
+                    'data' => NULL,
                     'status' => 500
                 );
             }
@@ -84,7 +84,65 @@
             } catch (\Throwable $th) {
                 return array(
                     'message' => 'Error al obtener la categoria',
-                    'data' => array(),
+                    'data' => NULL,
+                    'status' => 500
+                );
+            }
+        }
+
+        public function update($array, $id)
+        {
+            try {
+                $updateCategory = parent::update($array, $id);
+                
+                if ($updateCategory == NULL) {
+                    return array(
+                        'message' => 'Categoria no encontrada',
+                        'data' => NULL,
+                        'status' => 404
+                    );
+                }
+
+                $category = parent::getById($id);
+
+                return array(
+                    'message' => 'Categoria actualizada correctamente',
+                    'data' => $category,
+                    'status' => 200
+                );
+            } catch (\Throwable $th) {
+                return array(
+                    'message' => 'Error al actualizar la categoria',
+                    'data' => NULL,
+                    'status' => 500
+                );
+            }
+        }
+
+        public function destroy($id)
+        {
+            try {
+                $category = parent::delete($id);
+
+                if ($category == NULL) {
+                    return array(
+                        'message' => 'Categoria no encontrada',
+                        'data' => NULL,
+                        'status' => 404
+                    );
+                }
+
+                $getCategory = parent::getById($category);
+
+                return array(
+                    'message' => 'Categoria eliminada correctamente',
+                    'data' => $getCategory,
+                    'status' => 200
+                );
+            } catch (\Throwable $th) {
+                return array(
+                    'message' => 'Error al eliminar la categoria',
+                    'data' => NULL,
                     'status' => 500
                 );
             }

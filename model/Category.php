@@ -22,7 +22,7 @@
                 $this->connection = parent::connect(); 
 
                 // Consulta SQL para obtener todas las categorias  
-                $sql = "SELECT * FROM categorias";
+                $sql = "SELECT * FROM categorias WHERE fecha_borrado IS NULL";
 
                 // Preparamos la consulta
                 $statement = $this->connection->prepare($sql);
@@ -102,8 +102,88 @@
             }
         }
 
-        public function update() {}
+        // Función para actualizar una categoria por ID
+        public function update($data, $id) 
+        {
+            try {
+                // Preparamos la conexion a la base de datos
+                $this->connection = parent::connect();
+                
+                // Consultamos la categoria actual
+                $category = $this->getById($id);
 
-        public function delete() {}
+                $info = array();
+
+                if ($data['nombre'] == NULL) {
+                    $info['nombre'] = $category['nombre'];
+                } else {
+                    $info['nombre'] = $data['nombre'];
+                }
+
+                if ($data['descripcion'] == NULL) {
+                    $info['descripcion'] = $category['descripcion'];
+                } else {
+                    $info['descripcion'] = $data['descripcion'];
+                }
+
+                if ($data['estado'] == NULL) {
+                    $info['estado'] = $category['estado'];
+                } else {
+                    $info['estado'] = $data['estado'];
+                }
+
+                // Consulta SQL para actualizar una categoria por ID
+                $sql = "UPDATE categorias 
+                        SET 
+                        nombre = :nombre, 
+                        descripcion = :descripcion, 
+                        estado = :estado,
+                        fecha_actualizacion = NOW() 
+                        WHERE id = :id";
+
+                // Preparamos la consulta
+                $statement = $this->connection->prepare($sql);
+                
+                // Susitituimos los parametros por los valores reales
+                $statement->bindParam(':nombre',$info['nombre']);
+                $statement->bindParam(':descripcion', $info['descripcion']);
+                $statement->bindParam(':estado', $info['estado']);
+                $statement->bindParam(':id', $id);
+
+                // Ejecutamos la consulta
+                $statement->execute();
+
+                return $id;
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
+
+        // Función para eliminar una categoria por ID
+        public function delete($id)
+        {
+            try {
+                // Llamamos la conexion a la base de datos
+                $this->connection = parent::connect();
+
+                // Consulta SQL para eliminar una categoria por ID
+                // $sql = "DELETE FROM categorias WHERE id = :id";
+                $sql = "UPDATE categorias SET fecha_borrado = NOW() WHERE id = :id";
+
+                // Preparamos la consulta
+                $statement = $this->connection->prepare($sql);
+
+                // Susitituimos el parametro :id por el valor real
+                $statement->bindParam(':id', $id);
+
+                // Ejecutamos la consulta
+                $statement->execute();
+
+                // return true;
+                return $id;
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
     }
 
