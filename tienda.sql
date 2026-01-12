@@ -10,8 +10,8 @@ CREATE TABLE categorias (
     
     nombre varchar(150) NOT NULL, -- Nombre de la categoría
     descripcion text, -- Descripción de la categoría
-    
-    estado tinyinit, -- Estado de la categoría (activo/inactivo)
+
+    estado tinyint, -- Estado de la categoría (activo/inactivo)
     fecha_creacion timestamp DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación de la categoría
     fecha_actualizacion timestamp DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
     fecha_borrado timestamp NULL -- Fecha de borrado lógico
@@ -25,7 +25,7 @@ CREATE TABLE productos (
     descripcion text, -- Descripción del producto
     precio decimal(10, 2) NOT NULL, -- Precio del producto
 
-    estado tinyinit, -- Estado del producto (disponible/no disponible
+    estado tinyint, -- Estado del producto (disponible/no disponible
     fecha_creacion timestamp DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación del producto
     fecha_actualizacion timestamp DEFAULT CURRENT_TIMESTAMP, -- Fecha de última actualización
     fecha_borrado timestamp NULL -- Fecha de borrado lógico
