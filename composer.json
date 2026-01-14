@@ -1,5 +1,8 @@
 {
     "require": {
-        "illuminate/database": "^12.47"
+        "illuminate/database": "^12.47",
+        "nesbot/carbon": "^3.11",
+        "phpmailer/phpmailer": "^7.0",
+        "kint-php/kint": "^6.1"
     }
 }

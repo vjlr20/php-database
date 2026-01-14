@@ -2,6 +2,8 @@
     require_once './db/connection.php';
     require_once './entity/CategoryEntity.php';
 
+    use Carbon\Carbon; // Usamos Carbon para manejo de fechas
+
     /**
      * Modelo de Categoria:
      * Donde haremos las consultas directas a la base de datos
@@ -46,8 +48,8 @@
                 $newCategory->nombre = $data['nombre'];
                 $newCategory->descripcion = $data['descripcion'];
                 $newCategory->estado = $data['estado'];
-                $newCategory->fecha_creacion = date('Y-m-d H:i:s');
-                $newCategory->fecha_actualizacion = date('Y-m-d H:i:s');
+                $newCategory->fecha_creacion = Carbon::now('America/El_Salvador');
+                $newCategory->fecha_actualizacion = Carbon::now('America/El_Salvador');
 
                 // Guardamos la nueva categoria en la base de datos
                 $newCategory->save();
@@ -83,7 +85,7 @@
                 $category->nombre = $data['nombre'];
                 $category->descripcion = $data['descripcion'];
                 $category->estado = $data['estado'];
-                $category->fecha_actualizacion = date('Y-m-d H:i:s');
+                $category->fecha_actualizacion = Carbon::now('America/El_Salvador');
 
                 // Guardar los cambios en la base de datos
                 $category->save();
@@ -101,7 +103,7 @@
                 // Obtener la categoria por ID
                 $category = $this->getById($id);
 
-                $category->fecha_borrado = date('Y-m-d H:i:s');
+                $category->fecha_borrado = Carbon::now('America/El_Salvador');
                 $category->save();
 
                 return $category->id;
