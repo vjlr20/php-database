@@ -1,4 +1,8 @@
 <?php
+    use PHPMailer\PHPMailer\SMTP; //  Configurar en el servicio de envío
+    use PHPMailer\PHPMailer\PHPMailer; // Para enviar los correos
+    use PHPMailer\PHPMailer\Exception; //  Controlar los errores
+
     require_once './model/Category.php';
     
     // Controlador de Categoria
@@ -289,5 +293,46 @@
         //         );
         //     }
         // }
+
+        public function sendMail($to, $subject, $body)
+        {
+            try {
+                $mail = new PHPMailer(true);
+
+                // Configuraciones del servidor de correos
+                $mail->isSMTP(); // Usar una cuenta de correo autenticada
+
+                $mail->charset = 'UTF-8';
+                $mail->Host       = 'smtp.gmail.com'; // Servidor SMTP
+                $mail->SMTPAuth   = true; // Habilitar la autenticación SMTP
+                $mail->Username   = "ticongle.mail2023@gmail.com"; // Usuario SMTP
+                $mail->Password   = "gjaoovhwlewwwpqn"; // Contraseña SMTP
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Habilitar encriptación TLS
+                $mail->Port       = 587; // Puerto TCP para conectarse
+
+                // Remitente y destinatario
+                $mail->setFrom("ticongle.mail2023@gmail.com", "Ticongle Mail TEST");
+                $mail->addAddress($to); // Destinatario
+
+                // Contenido del correo
+                $mail->isHTML(true); // Formato HTML
+                $mail->Subject = $subject; // Asunto
+                $mail->Body    = $body; // Cuerpo del mensaje
+
+                $mail->send();
+
+                return array(
+                    'message' => 'Correo enviado correctamente',
+                    'data' => NULL,
+                    'status' => 200
+                );
+            } catch (\Throwable $th) {
+                return array(
+                    'message' => 'Error al enviar el correo',
+                    'data' => NULL,
+                    'status' => 500
+                );
+            }
+        }
     }
 
