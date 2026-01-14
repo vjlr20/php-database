@@ -34,34 +34,34 @@
             }
         }
 
-        public function store($data)
-        {
-            try {
-                $newCategory = parent::register($data);
+        // public function store($data)
+        // {
+        //     try {
+        //         $newCategory = parent::register($data);
 
-                if ($newCategory == NULL) {
-                    return array(
-                        'message' => 'No se pudo registrar la categoria',
-                        'data' => array(),
-                        'status' => 400
-                    );
-                }
+        //         if ($newCategory == NULL) {
+        //             return array(
+        //                 'message' => 'No se pudo registrar la categoria',
+        //                 'data' => array(),
+        //                 'status' => 400
+        //             );
+        //         }
 
-                $category = parent::getById($newCategory);
+        //         $category = parent::getById($newCategory);
 
-                return array(
-                    'message' => 'Categoria registrada correctamente',
-                    'data' => $category, // ID del nuevo registro
-                    'status' => 201
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al registrar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria registrada correctamente',
+        //             'data' => $category, // ID del nuevo registro
+        //             'status' => 201
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al registrar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
         public function show($id)
         {
@@ -90,204 +90,204 @@
             }
         }
 
-        public function update($array, $id)
-        {
-            try {
-                $updateCategory = parent::update($array, $id);
+        // public function update($array, $id)
+        // {
+        //     try {
+        //         $updateCategory = parent::update($array, $id);
                 
-                if ($updateCategory == NULL) {
-                    return array(
-                        'message' => 'Categoria no encontrada',
-                        'data' => NULL,
-                        'status' => 404
-                    );
-                }
+        //         if ($updateCategory == NULL) {
+        //             return array(
+        //                 'message' => 'Categoria no encontrada',
+        //                 'data' => NULL,
+        //                 'status' => 404
+        //             );
+        //         }
 
-                $category = parent::getById($id);
+        //         $category = parent::getById($id);
 
-                return array(
-                    'message' => 'Categoria actualizada correctamente',
-                    'data' => $category,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al actualizar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria actualizada correctamente',
+        //             'data' => $category,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al actualizar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function destroy($id)
-        {
-            try {
-                $category = parent::delete($id);
+        // public function destroy($id)
+        // {
+        //     try {
+        //         $category = parent::delete($id);
 
-                if ($category == NULL) {
-                    return array(
-                        'message' => 'Categoria no encontrada',
-                        'data' => NULL,
-                        'status' => 404
-                    );
-                }
+        //         if ($category == NULL) {
+        //             return array(
+        //                 'message' => 'Categoria no encontrada',
+        //                 'data' => NULL,
+        //                 'status' => 404
+        //             );
+        //         }
 
-                $getCategory = parent::getById($category);
+        //         $getCategory = parent::getById($category);
 
-                return array(
-                    'message' => 'Categoria eliminada correctamente',
-                    'data' => $getCategory,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al eliminar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria eliminada correctamente',
+        //             'data' => $getCategory,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al eliminar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function trash()
-        {
-            try {
-                // Obtener las categorias eliminadas
-                $categories = parent::getDeleted();
+        // public function trash()
+        // {
+        //     try {
+        //         // Obtener las categorias eliminadas
+        //         $categories = parent::getDeleted();
 
-                if (count($categories) < 1) {
-                    return array(
-                        'message' => 'No hay categorias eliminadas',
-                        'data' => array(),
-                        'status' => 404
-                    );
-                }
+        //         if (count($categories) < 1) {
+        //             return array(
+        //                 'message' => 'No hay categorias eliminadas',
+        //                 'data' => array(),
+        //                 'status' => 404
+        //             );
+        //         }
 
-                return array(
-                    'message' => 'Categorias eliminadas obtenidas correctamente',
-                    'data' => $categories,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al obtener las categorias eliminadas',
-                    'data' => array(),
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categorias eliminadas obtenidas correctamente',
+        //             'data' => $categories,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al obtener las categorias eliminadas',
+        //             'data' => array(),
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function restore($id)
-        {
-            try {
-                $category = parent::recover($id);
+        // public function restore($id)
+        // {
+        //     try {
+        //         $category = parent::recover($id);
 
-                if ($category == NULL) {
-                    return array(
-                        'message' => 'Categoria no encontrada',
-                        'data' => NULL,
-                        'status' => 404
-                    );
-                }
+        //         if ($category == NULL) {
+        //             return array(
+        //                 'message' => 'Categoria no encontrada',
+        //                 'data' => NULL,
+        //                 'status' => 404
+        //             );
+        //         }
 
-                $getCategory = parent::getById($category);
+        //         $getCategory = parent::getById($category);
 
-                return array(
-                    'message' => 'Categoria restaurada correctamente',
-                    'data' => $getCategory,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al restaurar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria restaurada correctamente',
+        //             'data' => $getCategory,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al restaurar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function filter()
-        {
-            try {
-                $categories = parent::getAllActive();
+        // public function filter()
+        // {
+        //     try {
+        //         $categories = parent::getAllActive();
 
-                if (count($categories) < 1) {
-                    return array(
-                        'message' => 'No hay categorias activas',
-                        'data' => array(),
-                        'status' => 404
-                    );
-                }
+        //         if (count($categories) < 1) {
+        //             return array(
+        //                 'message' => 'No hay categorias activas',
+        //                 'data' => array(),
+        //                 'status' => 404
+        //             );
+        //         }
 
-                return array(
-                    'message' => 'Categorias activas obtenidas correctamente',
-                    'data' => $categories,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al filtrar las categorias',
-                    'data' => array(),
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categorias activas obtenidas correctamente',
+        //             'data' => $categories,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al filtrar las categorias',
+        //             'data' => array(),
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function disable($id)
-        {
-            try {
-                $category = parent::deactivate($id);
+        // public function disable($id)
+        // {
+        //     try {
+        //         $category = parent::deactivate($id);
 
-                if ($category == NULL) {
-                    return array(
-                        'message' => 'Categoria no encontrada',
-                        'data' => NULL,
-                        'status' => 404
-                    );
-                }
+        //         if ($category == NULL) {
+        //             return array(
+        //                 'message' => 'Categoria no encontrada',
+        //                 'data' => NULL,
+        //                 'status' => 404
+        //             );
+        //         }
 
-                $getCategory = parent::getById($category);
+        //         $getCategory = parent::getById($category);
 
-                return array(
-                    'message' => 'Categoria desactivada correctamente',
-                    'data' => $getCategory,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al desactivar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria desactivada correctamente',
+        //             'data' => $getCategory,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al desactivar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
 
-        public function enable($id)
-        {
-            try {
-                $category = parent::activate($id);
+        // public function enable($id)
+        // {
+        //     try {
+        //         $category = parent::activate($id);
 
-                if ($category == NULL) {
-                    return array(
-                        'message' => 'Categoria no encontrada',
-                        'data' => NULL,
-                        'status' => 404
-                    );
-                }
+        //         if ($category == NULL) {
+        //             return array(
+        //                 'message' => 'Categoria no encontrada',
+        //                 'data' => NULL,
+        //                 'status' => 404
+        //             );
+        //         }
 
-                $getCategory = parent::getById($category);
+        //         $getCategory = parent::getById($category);
 
-                return array(
-                    'message' => 'Categoria activada correctamente',
-                    'data' => $getCategory,
-                    'status' => 200
-                );
-            } catch (\Throwable $th) {
-                return array(
-                    'message' => 'Error al activar la categoria',
-                    'data' => NULL,
-                    'status' => 500
-                );
-            }
-        }
+        //         return array(
+        //             'message' => 'Categoria activada correctamente',
+        //             'data' => $getCategory,
+        //             'status' => 200
+        //         );
+        //     } catch (\Throwable $th) {
+        //         return array(
+        //             'message' => 'Error al activar la categoria',
+        //             'data' => NULL,
+        //             'status' => 500
+        //         );
+        //     }
+        // }
     }
 
