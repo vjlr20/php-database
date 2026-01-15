@@ -4,5 +4,8 @@
         "nesbot/carbon": "^3.11",
         "phpmailer/phpmailer": "^7.0",
         "kint-php/kint": "^6.1"
+    },
+    "scripts": {
+        "serve": "php -S localhost:5173"
     }
 }

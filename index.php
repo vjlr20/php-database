@@ -14,7 +14,7 @@
     $categoryController = new CategoryController();
 
     // Función con Eloquent ORM
-    // $response = $categoryController->index();
+    $response = $categoryController->index();
     // $response = $categoryController->show(6);
     // $response = $categoryController->store(array(
     //     'nombre' => "Mascotas",
@@ -36,11 +36,11 @@
     // $response = $categoryController->disable(1);
     // $response = $categoryController->enable(1);
 
-    $response = $categoryController->sendMail(
-        "victor20.lopez99@gmail.com",
-        "Envío de correo con PHPMailer y SMTP",
-        "<h1>¡Hola desde PHPMailer!</h1>"      
-    );
+    // $response = $categoryController->sendMail(
+    //     "victor20.lopez99@gmail.com",
+    //     "Envío de correo con PHPMailer y SMTP",
+    //     "<h1>¡Hola desde PHPMailer!</h1>"      
+    // );
 
     echo "<pre>";
     echo json_encode($response, JSON_PRETTY_PRINT);

@@ -28,6 +28,10 @@
         public function getAll()
         {
             try {
+                /**
+                 * Creamos la consulta para obtener categorias
+                 * SELECT * FROM categorias WHERE fecha_borrado IS NULL
+                 */
                 $query = CategoryEntity::whereNull('fecha_borrado')
                                     ->get(); // get() trae varios registros
 
@@ -41,6 +45,14 @@
         public function register($data) 
         {
             try {
+                /**
+                 * Creamos la instancia de la entidad Categoria
+                 * 
+                 * INSERT INTO categorias 
+                 * (nombre, descripcion, estado, fecha_creacion, fecha_actualizacion)
+                 * VALUES (?, ?, ?, ?, ?)
+                 */
+
                 // Creamos la instancia para crear una nueva categoria
                 $newCategory = new CategoryEntity();
 
@@ -65,6 +77,10 @@
         public function getById($id) 
         {
             try {
+                /**
+                 * Creamos la consulta para obtener una categoria por ID
+                 * SELECT * FROM categorias WHERE id = ?
+                 */
                 $query = CategoryEntity::where('id', $id)
                                     ->first(); // first() trae un solo registro
 
@@ -78,6 +94,14 @@
         public function update($data, $id) 
         {
             try {
+                /**
+                 * Creamos la consulta para actualizar una categoria por ID
+                 * 
+                 * UPDATE categorias
+                 * SET nombre = ?, descripcion = ?, estado = ?, fecha_actualizacion = ?
+                 * WHERE id = ?
+                 */
+
                 // Obtener la categoria por ID
                 $category = $this->getById($id);
 
@@ -100,6 +124,14 @@
         public function delete($id)
         {
             try {
+                /**
+                 * Creamos la consulta para eliminar una categoria por ID
+                 * 
+                 * UPDATE categorias
+                 * SET fecha_borrado = ?
+                 * WHERE id = ?
+                 */
+
                 // Obtener la categoria por ID
                 $category = $this->getById($id);
 
@@ -113,126 +145,113 @@
         }
 
         // Función para los eliminados (SELECT)
-        // public function getDeleted()
-        // {
-        //     try {
-        //         // LLamar la conexion
-        //         $this->connection = parent::connect();
+        public function getDeleted()
+        {
+            try {
+                /**
+                 * Recuperamos todas las categorias que hayan sido eliminadas
+                 *  SELECT * FROM categorias WHERE fecha_borrado IS NOT NULL
+                 * 
+                 */
+                $categories = CategoryEntity::whereNotNull('fecha_borrado')
+                                    ->get();
 
-        //         // Consulta SQL para obtener los elementos eliminados
-        //         $sql = "SELECT * FROM categorias WHERE fecha_borrado IS NOT NULL";
-
-        //         // Preparamos la consulta
-        //         $statement = $this->connection->prepare($sql);
-
-        //         // Ejecutamos la consulta
-        //         $statement->execute();
-
-        //         // Almacenamos los resultados en un array asociativo
-        //         $response = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        //         return $response;
-        //     } catch (\Throwable $th) {
-        //         return NULL;
-        //     }
-        // }
+                return $categories->toArray();
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
 
         // Función para recuperar los elementos eliminados (UPDATE)
-        // public function recover($id)
-        // {
-        //     try {
-        //         // Llamar la conexion
-        //         $this->connection = parent::connect();
+        public function recover($id)
+        {
+            try {
+                /**
+                 * Recuperamos la categoria por ID
+                 * 
+                 * UPDATE categorias
+                 * SET fecha_borrado = NULL
+                 * WHERE id = ?
+                 * 
+                 */
+                $category = $this->getById($id);
 
-        //         // Consulta SQL para recuperar el elemento eliminado
-        //         $sql = "UPDATE categorias SET fecha_borrado = NULL WHERE id = :id";
+                $category->fecha_borrado = NULL;
+                $category->save();
 
-        //         // Preparamos la consulta
-        //         $statement = $this->connection->prepare($sql);
-
-        //         // Susitituimos el parametro :id por el valor real
-        //         $statement->bindParam(':id', $id);
-
-        //         // Ejecutamos la consulta
-        //         $statement->execute();
-
-        //         return $id;
-        //     } catch (\Throwable $th) {
-        //         return NULL;
-        //     }
-        // }
+                return $category->id;
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
 
         // Función para listar las categorias activas (SELECT) 
-        // public function getAllActive()
-        // {
-        //     try {
-        //         $this->connection = parent::connect();
-        //         /**
-        //          * Recuperamos todas las categorias que esten activas (estado = 1) 
-        //          * y aquellas que no hayan sido eliminadas (fecha_borrado IS NULL)
-        //          * 
-        //          */
-        //         $sql = "SELECT * FROM categorias WHERE estado = 1 AND fecha_borrado IS NULL";
+        public function getAllActive()
+        {
+            try {
+                /**
+                 * Recuperamos todas las categorias que esten activas (estado = 1) 
+                 * y aquellas que no hayan sido eliminadas
+                 * 
+                 * SELECT * FROM categorias WHERE estado = 1 AND fecha_borrado IS NULL
+                 */
+                $categories = CategoryEntity::where('estado', 1)
+                                    ->whereNull('fecha_borrado')
+                                    ->get();
 
-        //         // Preparamos la consulta
-        //         $statement = $this->connection->prepare($sql);
-
-        //         // Ejecutamos la consulta
-        //         $statement->execute();
-
-        //         // Almacenamos los resultados en un array asociativo
-        //         $response = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        //         return $response;
-        //     } catch (\Throwable $th) {
-        //         return array();
-        //     }
-        // }
+                return $categories->toArray();
+            } catch (\Throwable $th) {
+                return array();
+            }
+        }
 
         // Función para desctivar una categoria (UPDATE)
-        // public function deactivate($id)
-        // {
-        //     try {
-        //         $this->connection = parent::connect();
+        public function deactivate($id)
+        {
+            try {
+                /**
+                 * Creamos la consulta para desactivar una categoria por ID
+                 * 
+                 * UPDATE categorias
+                 * SET estado = 0, fecha_actualizacion = ?
+                 * WHERE id = ?
+                 */
 
-        //         $sql = "UPDATE categorias SET estado = 0, fecha_actualizacion = NOW() WHERE id = :id";
+                $category = $this->getById($id);
 
-        //         // Preparamos la consulta
-        //         $statement = $this->connection->prepare($sql);
+                $category->estado = 0;
+                $category->fecha_actualizacion = Carbon::now('America/El_Salvador');
 
-        //         // Susitituimos el parametro :id por el valor real
-        //         $statement->bindParam(':id', $id);
+                $category->save();
 
-        //         // Ejecutamos la consulta
-        //         $statement->execute();
-
-        //         return $id;
-        //     } catch (\Throwable $th) {
-        //         return NULL;
-        //     }
-        // }
+                return $category->id;
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
 
         // Función para activar una categoria (UPDATE)
-        // public function activate($id)
-        // {
-        //     try {
-        //         $this->connection = parent::connect();
+        public function activate($id)
+        {
+            try {
+                /**
+                 * Creamos la consulta para activar una categoria por ID
+                 * 
+                 * UPDATE categorias
+                 * SET estado = 1, fecha_actualizacion = ?
+                 * WHERE id = ?
+                 */
+                $category = $this->getById($id);
 
-        //         $sql = "UPDATE categorias SET estado = 1, fecha_actualizacion = NOW() WHERE id = :id";
+                $category->estado = 1;
+                $category->fecha_actualizacion = Carbon::now('America/El_Salvador');
 
-        //         // Preparamos la consulta
-        //         $statement = $this->connection->prepare($sql);
+                $category->save();
 
-        //         // Susitituimos el parametro :id por el valor real
-        //         $statement->bindParam(':id', $id);
-
-        //         // Ejecutamos la consulta
-        //         $statement->execute();
-
-        //         return $id;
-        //     } catch (\Throwable $th) {
-        //         return NULL;
-        //     }
-        // }
+                return $category->id;
+            } catch (\Throwable $th) {
+                return NULL;
+            }
+        }
     }
 
